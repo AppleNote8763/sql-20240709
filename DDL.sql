@@ -38,8 +38,43 @@ CREATE TABLE data_type (
     datetime_column DATETIME
 );
 
--- 사용자 생성 *계정을 접속하는 순서 좁은범위부터 접속시도를 시작해서 해당 주소에 부합하지 않으면 더넓은 범위로 접속(지정되어 있을시)
+-- 사용자 생성 *사용자가 접속하는 순서는 좁은범위부터 접속시도를 시작해서 해당 주소에 부합하지 않으면 더넓은 범위로 접속(지정되어 있을시)
 -- CREATE USER '사용자명'@'접속IP' IDENTIFIED BY '비밀번호';
 CREATE USER 'developer'@'127.0.0.1' IDENTIFIED BY 'P!ssw0rd';
 CREATE USER 'developer'@'192.168.1.5' IDENTIFIED BY 'P!ssw0rd';
 CREATE USER 'developer'@'%' IDENTIFIED BY 'P!ssw0rd'; -- %(와일드카드) 모든값을 가져옴
+
+-- DROP : 데이터 구조(스키마)를 삭제하는 명령어
+-- DROP 스키마명;
+
+-- 사용자 삭제	*(이름@위치)
+DROP USER 'developer'@'%';
+
+-- 테이블 삭제
+-- 만약에 해당 테이블을 참조하고 있는 다른 테이블이 존재하면 테이블 삭제가 불가능
+DROP TABLE example_table;
+
+-- 데이터베이스 삭제
+DROP DATABASE practice_sql;
+
+-- ALTER : 구조를 변경하는 명령어
+
+-- 테이블의 컬럼(열) 추가
+ALTER TABLE example_table
+ADD example_column3 VARCHAR(10);
+
+-- 테이블 컬럼 삭제
+ALTER TABLE example_table
+DROP COLUMN example_column3;
+
+-- 테이블 컬럼 타입 수정
+ALTER TABLE example_table
+MODIFY COLUMN example_column2 TEXT;
+
+-- 테이블 컬럼 전체 수정
+ALTER TABLE example_table
+CHANGE example_column1 column1 VARCHAR(20);
+
+-- 데이터베이스 문자셋 수정
+ALTER DATABASE practice_sql DEFAULT CHARACTER SET utf8;
+
