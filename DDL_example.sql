@@ -44,3 +44,4 @@ CREATE TABLE referee (
     country VARCHAR(30),
     position VARCHAR(10)
 );
+

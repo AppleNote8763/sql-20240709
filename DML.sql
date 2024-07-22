@@ -61,3 +61,18 @@ SELECT * FROM auto_table;
 DELETE FROM auto_table;
 TRUNCATE TABLE auto_table;	-- TRUNCATE TABLE 테이블명; *테이블의 구조를 초기상태로 되돌림(당연히 레코드값들도 삭제)
 
+-- INSERT INTO SELECT : 삽입 작업시 조회 결과를 사용하여 삽입
+INSERT INTO example_table
+SELECT * FROM  example_table WHERE column1 IS NULL;
+
+-- UPDATE SELECT : 수정 작업시 조회 결과를 사용하여 수정 (수정 값에 대하여)
+UPDATE example_table A SET A.column1 = (
+	SELECT B.num
+    FROM auto_table B
+    WHERE B.idx = 1
+);
+
+SELECT example_column2
+FROM example_table
+WHERE example_column2 = '데이터2';
+
