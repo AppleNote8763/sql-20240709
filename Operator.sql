@@ -107,6 +107,16 @@ WHERE transaction_number = 6;
 SELECT * FROM transaction
 WHERE note <=> complete;
 
+-- 결과
+-- ...	...			...	...		...		...		note		complete
+-- 2	2024-07-10	판매	영양제	700000	70000	종합 비타민	0
+-- 6	2024-07-17	판매	의약외품	2000000	200000	NULL		NULL
+-- 8	2024-07-19	판매	의약외품	1500000	150000	소염진통제		0
+-- 107~108번 코드에서 우리가 찾고자 하는것은 note와 complete의 값이 둘다 null 일때의 행을 찾기위해서 실행했었지만
+-- SELECT * FROM transaction WHERE note <=> complete; 해당문구는 두 값이 NULL이거나 두 값이 동일할때도 반환을하기 때문에 위와 같은 결과가 찍히게된다.
+-- BOOLEAN데이터 타입으로 생성하면 tinyint라는 데이터 타입으로 쓰여지기 때문에 true = 1, false = 0, NULL = 0이 된다고 한다.
+-- note의 데이터 타입이 TEXT이기 때문에 나타나는 오류라고 하며 데이터 타입을 VARCHAR(크기)로 바꿔주면 해당 문제가 해결된다.
+
 -- IS : 좌항이 우항과 같으면 true (키워드)
 -- IS NOT : 좌항과 우항이 다르면 true (키워드)
 SELECT * FROM transaction
