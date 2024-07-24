@@ -166,7 +166,7 @@ SELECT * FROM transaction
 WHERE transaction_date LIKE '2024-07-%';
 
 SELECT * FROM transaction
-WHERE transaction_date LIKE '2024-07-_';
+WHERE transaction_date LIKE '2024-07-__';
 
 SELECT * FROM transaction
 WHERE breakdown LIKE '의%';
@@ -180,7 +180,7 @@ WHERE transaction_date LIKE '2024-__-13';
 
 -- 정렬
 -- ORDER BY : 조회 결과를 특정 컬럼 기준으로 정렬
--- ASC : 오름차순 정렬 / DESC : 내림차순 정렬
+-- ASC : 오름차순 정렬 / DESC : 내림차순 정렬		*아무것도 적지 않으면 오름차순(ASC)으로 나온다
 SELECT * FROM transaction
 ORDER BY amount ASC;
 

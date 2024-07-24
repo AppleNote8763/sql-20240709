@@ -50,6 +50,7 @@ UPDATE unique_table SET unique_column = 1 WHERE unique_column = 2;
 -- 기본키 : 테이블에서 각 레코드를 고유하게 식별하기 위해 후보키에서 선택한 속성
 -- 대체키 : 후보키에서 기본키를 제외한 나머지 속성들
 
+
 -- PRIMARY KEY 제약조건 : 특정 컬럼을 기본키로 지정
 -- (자기 자신과 외부의 테이블에 대한 INSERT, UPDATE) 영향을 미침
 CREATE TABLE key_table (
@@ -70,6 +71,7 @@ CREATE TABLE composite_table (
     primaty2 INT PRIMARY KEY
 );
 
+-- 두개의 컬럼을 조합하여 기본키를 지정(복합키)	*남용하는건 좋지않음(정말로 필요할 때만 사용)
 CREATE TABLE composite_table (
 	primary1 INT,
     primary2 INT,
@@ -93,7 +95,7 @@ INSERT INTO foreign_table VALUES (1, 0);	-- 참조하는 값에 0이 없어서 �
 INSERT INTO foreign_table VALUES (1, 1);
 
 UPDATE foreign_table SET foreign1 = 2
-WHERE primary1 = 1;	
+WHERE primary1 = 1;
 
 -- FOREIGN KEY 제약조건으로 참조되어지고 있는 테이블의 레코드는 수정 삭제 작업이 불가능
 UPDATE key_table SET primary_column = 2
@@ -164,3 +166,4 @@ CREATE TABLE default_table (
 
 INSERT INTO default_table (column1) VALUES (99);
 SELECT * FROM default_table;
+
