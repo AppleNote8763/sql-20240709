@@ -53,10 +53,9 @@ SELECT * FROM employee_view;
 -- VIEW 수정
 -- ALTER VIEW 뷰이름 AS SELECT ...
 ALTER VIEW employee_view2 AS
-SELECT
-	E.employee_number '사번',
+SELECT 
+    E.employee_number '사번',
     E.name '사원이름',
-    E.department_code '부서코드',
     D.name '부서명',
     D.tel_number '부서전화번호'
 FROM employee E LEFT JOIN department D
@@ -65,3 +64,4 @@ ORDER BY 부서명;
 
 -- VIEW 삭제
 -- DROP VIEW 뷰이름
+DROP VIEW employee_view2;
