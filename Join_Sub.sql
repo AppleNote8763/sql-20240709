@@ -41,6 +41,7 @@ VALUES ('이도', '17', 'D');
 SELECT * FROM employee;
 SELECT * FROM department;
 
+
 -- Alias : 쿼리문에서 사용되는 별칭
 -- 컬럼 및 테이블에서 사용가능
 -- 사용하는 이름을 변경하고 싶을때 적용
@@ -56,6 +57,7 @@ SELECT
     dpt.name '부서명',
     dpt.tel_number '부서 전화번호'
 FROM department dpt;
+
 
 -- JOIN : 두 개 이상의 테이블을 특정 조건에 따라 조합하여 결과를 조회하고자 할때 사용하는 명령어
 
@@ -149,4 +151,110 @@ SELECT
 FROM  employee E INNER JOIN department D
 ON E.department_code = D.department_code
 WHERE D.name = '영업부';
+-- 위의 조건에서의 조회 방식은 조회량이 많아 지기 때문에 서브쿼리를 이용하는게 좋음
 
+
+-- 서브쿼리 : 쿼리 내부에 존재하는 또 다른 쿼리, 쿼리 결과를 조건이나 테이블로 사용할 수 있도록 함
+
+-- WHERE 절에서 서브쿼리 : 조회 결과를 조건으로 사용하여 조건을 동적으로 지정할 수 있도록 함
+-- WHERE 절에서 비교 연산등으로 사용할 때 조회하는 컬럼의 개수 및 레코드의 개수 주의
+SELECT employee_number, name, age
+FROM employee
+WHERE department_code = (
+	SELECT department_code
+    FROM department
+    WHERE name = '영업부'
+);
+
+-- 실행안됨
+SELECT employee_number, name, age
+FROM employee
+WHERE department_code = (
+	SELECT *	-- *를 쓸려면 WHERE에서 해당 테이블에 모든 컬럼을 조건으로 걸어야함
+    FROM department
+    WHERE name = '영업부'
+);
+
+-- 실행안됨
+SELECT employee_number, name, age
+FROM employee
+WHERE department_code = (
+	SELECT department_code
+    FROM department
+);
+
+-- 실행됨
+SELECT employee_number, name, age
+FROM employee
+WHERE department_code IN (
+	SELECT department_code
+    FROM department
+);
+
+-- 실행안됨
+SELECT employee_number, name, age
+FROM employee
+WHERE department_code IN (
+	SELECT *
+    FROM department
+);
+
+
+-- 부서명이 '영업부'인 사원에 대해
+-- 사번, 이름, 나이를 조회하시오.
+-- 어디서 찾을지 잘 모르겠을때 이런식으로 해보자
+
+SELECT *
+FROM department
+WHERE name = '영업부';
+
+SELECT department_code
+FROM department
+WHERE name = '영업부';
+
+SELECT *
+FROM employee
+WHERE department_code = (
+	SELECT department_code
+    FROM department
+    WHERE name = '영업부'
+);
+
+SELECT employee_number, name, age
+FROM employee
+WHERE department_code = (
+	SELECT department_code
+    FROM department
+    WHERE name = '영업부'
+);
+
+
+-- FROM 절에서 서브쿼리 : 조회 결과 테이블을 다시 FROM 절에서 재사용
+SELECT * FROM department
+WHERE name = '영업부';
+
+SELECT
+	E.employee_number '사번',
+	E.name '이름',
+    E.age '나이'
+FROM  employee E INNER JOIN (
+	SELECT * FROM department
+	WHERE name = '영업부'
+    ) D
+ON E.department_code = D.department_code
+WHERE D.name = '영업부';
+
+-- 서브쿼리를 FROM 절에서 사용할 땐 반드시 별칭을 사용해야함
+-- 별칭이 없어서 실행안됨
+SELECT *
+FROM (
+	SELECT * FROM department
+)
+WHERE name = '영업부';
+
+-- 별칭이 있어서 실행가능
+SELECT *
+FROM (
+	SELECT * FROM department
+) D
+WHERE name = '영업부';
