@@ -60,8 +60,8 @@ SELECT * FROM tel_auth WHERE tel_number = '01012345678' AND auth_number = '0123'
 -- 전체 고객 수 및 전체 고객 수 불러오기
 -- 최종 사용자 () => (전체 고객 수, 전체 페이지 수)
 -- 고객 테이블에서 전체 레코드의 개수와 전체 레코드의 개수에 10을 나눈 값에 소수점 첫번째 자리에서 값을 올림
-SELECT COUNT(*), CEIL(COUNT(*) / 10) FROM customer;
-
+SELECT COUNT(*), CEIL(COUNT(*) / 10.0) FROM customer;
+-- SELECT COUNT(*), CEIL(COUNT(*), 0) FROM customer;
 
 
 -- 전체 고객 리스트 불러오기
@@ -90,18 +90,41 @@ LIMIT 0, 10;
 
 -- 고객 삭제
 -- 최종 사용자 (고객 정보)
+-- 고객 테이블에서 지정한 고객(고객 번호에 해당하는)의 레코드를 삭제하는 작업
+-- 필요 추가 데이터 : 고객 번호(화면에서), 로그인한 사용자의 아이디(화면에서)
+SELECT * FROM customer
+WHERE cousomer_number = 1 AND charger = 'qwer1234';
+
+DELETE FROM customer WHERE cousomer_number = 1;
 
 
 -- 고객 등록
 -- 최종 사용자 (고객 사진, 고객 이름, 생년월일, 담당자, 주소)
+-- 고객 테이블에 레코드(고객 사진, 고객 이름, 지역, 생년월일, 담당자, 주소)를 삽입
+-- 필요 추가 데이터 : 지역(화면에서)
+
+-- 레코드 삽입시 담장자에 대한 참조 제약 확인
+SELECT * FROM nurse WHERE id = 'qwer1234';
+
+INSERT INTO customer(name, area, charger, profile_image, birth, address)
+VALUES('이영희', '부산광역시', 'qwer1234', null, '590826', '부산광역시 부산진구');
 
 
 -- 담당자(요양사) 검색
--- 최종 사용자 (이름)
+-- 최종 사용자 (이름) => 아이디, 이름, 전화번호
+-- 요양사 테이블에서 이름을 기준으로 해당 입력한 이름과 같은 레코드를 조회
+-- 필요추가 데이터 : x
+SELECT id, name '이름', tel_number '전화번호'FROM nurse WHERE name = '홍길동';
 
 
 -- 고객 상세보기
--- 최종 사용자 (고객 정보)
+-- 최종 사용자 (고객 정보) => (고객 사진, 고객 이름, 생년월일, 담당자이름, 주소)
+-- 고객 테이블에서 특정 고객을 조회하여 반환, 담당자 이름을 반환하기위해 영양사 테이블을 조인
+-- 필요 추가 데이터 : 고객 번호 (화면에서)
+SELECT C.profile_image, C.name, C.birth, N.name, C.address
+FROM customer C INNER JOIN nurse N
+ON C.charger = N.id
+WHERE C.customer_number = 1;
 
 
 -- 관리 기록 리스트
