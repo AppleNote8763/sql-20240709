@@ -81,8 +81,7 @@ GROUP BY employee_number, date;
 
 -- 필터링 (HAVING) : 그룹화된 결과에 필터 작업을 수행
 -- 주의!! WHERE 절과 사용방법이 비슷하지만 WHERE절은 조회할 때 사용, HAVING절은 조회 결과에 사용
--- 실행 안됨
-SELECT
+SELECT	-- 실행 안됨
 	AVG(amount) '평균',
     employee_number '사번'
 FROM sale
@@ -96,8 +95,8 @@ SELECT
 FROM sale
 GROUP BY employee_number
 HAVING AVG(amount) <= 110000;
--- 실행가능
-SELECT
+
+SELECT	-- 실행가능
 	AVG(amount) '평균',
     employee_number '사번'
 FROM sale
@@ -105,16 +104,14 @@ GROUP BY employee_number
 HAVING 평균 <= 110000;
 
 -- 결과 테이블에 존재하지 않는 컬럼은 HAVING 절에서 사용할 수 없음
--- 실행 안됨
-SELECT
+SELECT	-- 실행 안됨
 	AVG(amount) '평균',
     employee_number '사번'
 FROM sale
 GROUP BY employee_number
 HAVING date < '2024-07-05';	-- date는 조회한 결과에 대한 값이 아니기 때문에 불가능
 
--- 실행가능
-SELECT
+SELECT	-- 실행가능
 	AVG(amount) '평균',
     employee_number '사번'
 FROM sale
